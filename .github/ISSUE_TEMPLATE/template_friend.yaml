@@ -55,8 +55,7 @@ body:
             "title": "",
             "url": "",
             "avatar": "",
-            "description": "",
-            "tag": ""
+            "descr": ""
         }
         ```
   - type: input
