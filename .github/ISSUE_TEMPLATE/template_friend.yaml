@@ -44,51 +44,41 @@ body:
           label: 申请前请确保贵站已经添加本站。
         - required: false
           label:  看我心情。
-  - type: input
-    id: link-name
-    attributes:
-      label: 博客名称
-      description: 请输入您的博客名称。
-      placeholder: "如: 叶泯希"
-    validations:
-      required: true
-  - type: input
-    id: link-url
-    attributes:
-      label: 博客地址
-      description: 请输入您博客的主页地址，包含https。
-      placeholder: "如: https://blog.418121.xyz"
-    validations:
-      required: true
-  - type: input
-    id: link-avatar
-    attributes:
-      label: 博客头像
-      description: 请输入您博客的头像，包含https，请检查是否能正常访问，且无跨域问题。
-      placeholder: "如: https://blog.418121.xyz/images/avatar.webp"
-    validations:
-      required: true
-  - type: input
-    id: link-desc
-    attributes:
-      label: 博客描述
-      description: 请输入您博客的描述。
-      placeholder: "如: 意义是自己赐予的"
-    validations:
-      required: true
-  - type: input
-    id: friends-html
-    attributes:
-      label: 友链地址
-      description: 请输入您的友链页面地址。
-      placeholder: "如: https://yoursite.com/friends/"
-    validations:
-      required: false
-  - type: input
-    id: rss-url
-    attributes:
-      label: 订阅地址
-      description: 如果您使用有RSS订阅链接，请在此处填写，方便抓取最新文章
-      placeholder: "如: https://blog.418121.xyz/atom.xml"
-    validations:
-      required: false
+        - type: textarea
+          id: config-file
+          validations:
+            required: true
+          attributes:
+            label: 友链信息
+            description: 请在双引号中填写，不要修改格式。
+            value: |
+              ```json
+              {
+                  "title": "",
+                  "url": "",
+                  "avatar": "",
+                  "description": "",
+                  "tag": ""
+              }
+              ```
+        - type: input
+          id: friends-html
+          attributes:
+            label: 友链地址
+            description: 请输入您的友链页面地址。
+            placeholder: "如: https://xaoxuu.com/friends/"
+          validations:
+            required: true
+        - type: input
+          id: friends-rss
+          attributes:
+            label: 订阅地址
+            description: 请输入您的订阅地址。
+            placeholder: "如: https://xaoxuu.com/feed.xml"
+          validations:
+        - type: input
+          id: friends-repo
+          attributes:
+            label: 友链仓库（可选）
+            description: 如果您使用 issue 作为友链源，请附上 issue 仓库链接。
+            placeholder: "如: https://github.com/xaoxuu/friends/"
