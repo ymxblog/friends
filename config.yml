@@ -7,5 +7,5 @@ request:
 issues:
   repo: ymxblog/friends # 仓库持有者/仓库名
   label:
-  groups: ['active','checklist','suspend','404','花架','花友','花族']
-  sort: updated-desc # 排序，按最近更新，取消此项则按创建时间排序
+  groups: ['active','checklist','suspend','404','花架','花友','花族','花主']
+  sort:
