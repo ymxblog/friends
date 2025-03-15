@@ -48,7 +48,7 @@ body:
       required: true
     attributes:
       label: 友链信息
-      description: 前四需要项必填，最后两项有作者填写，请在双引号中填写，不要修改格式。
+      description: 前四需要项必填，第五项选填，最后两项由作者填写，请在双引号中填写，不要修改格式。
       value: |
         ```json
         {
