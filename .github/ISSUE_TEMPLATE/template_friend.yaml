@@ -55,7 +55,10 @@ body:
             "title": "",
             "url": "",
             "avatar": "",
-            "descr": ""
+            "descr": "",
+            "topimg": "",
+            "tag": "",
+            "color": ""
         }
         ```
   - type: input
