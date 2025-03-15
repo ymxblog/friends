@@ -53,7 +53,7 @@ body:
         ```json
         {
             "title": "",
-            "url": "",
+            "link": "",
             "avatar": "",
             "descr": "",
             "topimg": "",
