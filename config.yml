@@ -8,4 +8,4 @@ issues:
   repo: ymxblog/friends # 仓库持有者/仓库名
   label:
   groups: ['active','checklist','suspend','404','花架','花友','花族','花主']
-  sort:
+  sort: create-aesc
