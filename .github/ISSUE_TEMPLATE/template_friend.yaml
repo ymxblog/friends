@@ -72,7 +72,7 @@ body:
   - type: input
     id: friends-rss
     attributes:
-      label: 订阅地址
+      label: 订阅地址（可选）
       description: 请输入您的订阅地址。
       placeholder: "如: https://blog.418121.xyz/feed.xml"
   - type: input
