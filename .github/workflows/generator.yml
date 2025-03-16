@@ -35,5 +35,5 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}  # 使用默认的 GITHUB_TOKEN
         repository: ${{ github.repository }}  # 指向当前仓库
-        event-type: repo-changed
+        event-type: change
         client-payload: '{"branch": "output"}'
