@@ -2,6 +2,7 @@ name: Trigger Private Repo B
 on:
   push:
     branches: [output]
+    paths: [v2/**]
 jobs:
   trigger:
     runs-on: ubuntu-latest
