@@ -21,13 +21,22 @@ jobs:
     - name: Update links #更新
       run: |
         python generator/main.py
-    - name: Commit & Push
-      uses: action-x/commit@v2.9
+    - name: Checkout Code
+      uses: actions/checkout@v4
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        push-branch: 'output'
-        force-push: 'true'
-        commit-message: 'Generate Json'
-        name: ymxblog
-        email: ymxblog@qq.com
+        ef: output  # 切换到 output 分支
+    
+    - name: Generate Files
+      run: |
+        echo "New content" > generated.json
+    
+    - name: Commit & Push (Native)
+      env:
+        REPO_TOKEN: ${{ secrets.PAT }}
+      run: |
+        git config user.name "ymxblog"
+        git config user.email "ymxblog@qq.com"
+        git add .
+        git commit -m "Generate Json"
+        git push "https://x-access-token:${PAT}@github.com/${{ github.repository }}.git" HEAD:output --force
 
