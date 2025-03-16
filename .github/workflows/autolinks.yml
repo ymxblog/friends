@@ -1,25 +1,47 @@
-name: 检测 Issue 事件
+name: Check for File Changes and Trigger Other Repo
 
 on:
-  issues:
-    types:
-      - opened     # 当创建新的 issue 时
-      - edited     # 当编辑现有 issue 时
-      - reopened    # 当重新打开之前关闭的 issue 时
-      - closed      # 当关闭 issue 时
+  push:
+    branches:
+      - output  # 当 output 分支上有新提交时触发
 
 jobs:
-  handle_issue:
+  check_changes:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Trigger another repository action
-        if: env.changed == 'true' && env.source_valid == 'true'
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          repository: yeminxi/solitude  # 目标仓库
-          token: ${{ secrets.MY_SECRET_TOKEN }}  # 使用前面设置的 PAT
-          event-type: repo-changed  # 事件类型
+    - name: Checkout Output Branch
+      uses: actions/checkout@v4
+      with:
+        ref: output
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.x
+
+    - name: Compare Files
+      id: compare_files
+      run: |
+        git fetch origin main
+        DIFF=$(git diff --name-only origin/main)
+        if [ -z "$DIFF" ]; then
+          echo "No changes detected."
+          echo "changes=false" >> $GITHUB_ENV
+        else
+          echo "Changes detected: $DIFF"
+          echo "changes=true" >> $GITHUB_ENV
+          echo "modified_files=$DIFF" >> $GITHUB_ENV
+        fi
+
+    - name: Trigger Another Repository
+      if: env.changes == 'true'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        TRIGGER_TOKEN: ${{ secrets.MY_SECRET_TOKEN }}  # 用于访问目标私密仓库的 PAT
+      run: |
+        curl -X POST \
+        -H "Authorization: token $TRIGGER_TOKEN" \
+        -H "Accept: application/vnd.github.v3+json" \
+        https://api.github.com/repos/yeminxi/hexo_code/dispatches \
+        -d '{"event_type":"trigger-action"}'  # 与目标仓库中事件类型一致
