@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - output  # 当 output 分支上有新提交时触发
+  workflow_dispatch:  # 添加手动触发的支持
 
 jobs:
   check_changes:
