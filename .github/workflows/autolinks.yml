@@ -1,62 +1,16 @@
-name: Check for File Changes and Trigger Other Repo
-
+# 账号A的仓库配置（.github/workflows/trigger.yml）
+name: Trigger Repo B
 on:
+  issues: 
+  watch: 
   push:
-    branches:
-      - output  # 当 output 分支上有新提交时触发
-  workflow_dispatch:  # 添加手动触发的支持
-
+    branches: [output]
 jobs:
-  check_changes:
+  trigger:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Output Branch
-      uses: actions/checkout@v4
-      with:
-        ref: output
-
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: 3.x
-
-    - name: Compare Files
-      id: compare_files
-      run: |
-        git fetch origin main
-        DIFF=$(git diff --name-only origin/main)
-        if [ -z "$DIFF" ]; then
-          echo "No changes detected."
-          echo "changes=false" >> $GITHUB_ENV
-        else
-          echo "Changes detected: $DIFF"
-          echo "changes=true" >> $GITHUB_ENV
-          
-          # 用逗号分隔文件名并存储至环境变量
-          MODIFIED_FILES=$(echo "$DIFF" | tr '\n' ',')
-          MODIFIED_FILES=$(echo "$MODIFIED_FILES" | sed 's/,/,/g')  # 确保每项之间用逗号分隔
-          echo "modified_files=$MODIFIED_FILES" >> $GITHUB_ENV
-        fi
-
-    - name: Trigger Another Repository
-      if: env.changes == 'true'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TRIGGER_TOKEN: ${{ secrets.MY_SECRET_TOKEN }}  # 用于访问目标私密仓库的 PAT
-      run: |
-        MODIFIED_FILES=${{ env.modified_files }}
-        
-        # 使用 jq 创建 JSON 数据
-        PAYLOAD=$(jq -n \
-          --arg event_type "repo-changed" \
-          --arg changed_files "$MODIFIED_FILES" \
-          '{event_type: $event_type, client_payload: {changed_files: $changed_files}}')
-
-        echo "Triggering another repository with modified files: $MODIFIED_FILES"
-        
-        curl -X POST \
-        -H "Authorization: token $TRIGGER_TOKEN" \
-        -H "Accept: application/vnd.github.v3+json" \
-        https://api.github.com/repos/yeminxi/hexo_code/dispatches \
-        -d "$PAYLOAD"
+      - uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.MY_SECRET_TOKEN }}
+          repository: yeminxi/hexo_code
+          event-type: repo-changed
