@@ -1,38 +1,21 @@
-name: 检测 Output 分支文件变化
+name: 检测 Issue 事件
 
 on:
-  push:
-    branches:
-      - output  # 监听 output 分支推送
+  issues:
+    types:
+      - opened     # 当创建新的 issue 时
+      - edited     # 当编辑现有 issue 时
+      - reopened    # 当重新打开之前关闭的 issue 时
+      - closed      # 当关闭 issue 时
 
 jobs:
-  detect_changes:
+  handle_issue:
     runs-on: ubuntu-latest
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Check for specific file change
-        id: check_file_change
-        run: |
-          if [[ $(git diff --name-only HEAD^ HEAD) == *"v2/active.json"* ]]; then  # 替换为您想检测的文件路径
-            echo "changed=true" >> $GITHUB_ENV
-          else
-            echo "changed=false" >> $GITHUB_ENV
-          fi
-
-      - name: Check if the push was from a specific action
-        if: env.changed == 'true'
-        run: |
-          # 检查最近的提交消息，验证是否来自特定 Action
-          last_commit_message=$(git log -1 --pretty=%B)
-          if [[ $last_commit_message == *"[bot]"* ]]; then  # 假设执行 Action 的用户包含 [bot] 进行标识
-            echo "source_valid=true" >> $GITHUB_ENV
-          else
-            echo "source_valid=false" >> $GITHUB_ENV
-          fi
-      
+        
       - name: Trigger another repository action
         if: env.changed == 'true' && env.source_valid == 'true'
         uses: peter-evans/repository-dispatch@v3
