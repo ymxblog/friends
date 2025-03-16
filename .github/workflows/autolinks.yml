@@ -12,3 +12,4 @@ jobs:
           token: ${{ secrets.MY_SECRET_TOKEN }}
           repository: yeminxi/hexo_code
           event-type: repo-changed
+          client-payload: '{"message":"Triggered by A!"}'  # 可选：传递额外参数
