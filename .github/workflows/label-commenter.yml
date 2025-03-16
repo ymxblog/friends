@@ -21,9 +21,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           config_file: .github/configs/label-commenter-config.yml
-      - name: Trigger another repository action
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          repository: yeminxi/hexo_code  # 替换为第二个账号的目标仓库
-          token: ${{ secrets.MY_SECRET_TOKEN }}  # 使用之前设置的 PAT
-          event-type: repo-changed  # 自定义事件类型
