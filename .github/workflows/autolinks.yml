@@ -32,7 +32,10 @@ jobs:
         else
           echo "Changes detected: $DIFF"
           echo "changes=true" >> $GITHUB_ENV
-          echo "modified_files=$DIFF" >> $GITHUB_ENV
+          
+          # 将更改的文件存入环境变量，确保不会出错
+          MODIFIED_FILES=$(echo "$DIFF" | tr '\n' ',')  # 用逗号分隔文件名
+          echo "modified_files=$MODIFIED_FILES" >> $GITHUB_ENV
         fi
 
     - name: Trigger Another Repository
@@ -41,8 +44,11 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         TRIGGER_TOKEN: ${{ secrets.MY_SECRET_TOKEN }}  # 用于访问目标私密仓库的 PAT
       run: |
+        MODIFIED_FILES=${{ env.modified_files }}
+        echo "Triggering another repository with modified files: $MODIFIED_FILES"
+        
         curl -X POST \
         -H "Authorization: token $TRIGGER_TOKEN" \
         -H "Accept: application/vnd.github.v3+json" \
         https://api.github.com/repos/yeminxi/hexo_code/dispatches \
-        -d '{"event_type":"repo-changed"}'  # 与目标仓库中事件类型一致
+        -d "{\"event_type\":\"repo-changed\", \"client_payload\": {\"changed_files\": \"$MODIFIED_FILES\"}}"
