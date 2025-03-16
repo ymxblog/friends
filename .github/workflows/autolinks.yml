@@ -1,0 +1,16 @@
+name: 自动获取友链更新
+on:
+  push:
+    branches:
+      - output
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger another repository action
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          repository: yeminxi/solitude  # 替换为第二个账号的目标仓库
+          token: ${{ secrets.MY_SECRET_TOKEN }}  # 使用之前设置的 PAT
+          event-type: repo-changed  # 自定义事件类型
