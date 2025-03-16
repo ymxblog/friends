@@ -1,19 +1,23 @@
 name: Trigger Private Repo B
 on:
-  push:
-    branches: [output]
-    paths: ['v2/**']
+ repository_dispatch:
+    types: [change]
 jobs:
-  trigger:
+  build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@4
+        with:
+          ref: ${{ github.event.client_payload.branch || 'main' }}
+      - name: Run Tasks
+        run: echo "成功触发，当前分支：${{ github.event.client_payload.branch }}"
       - name: Send dispatch event
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.MY_SECRET_TOKEN }}  # 必须为账号B的PAT
           repository: yeminxi/hexo_code
           event-type: repo-changed
-          # 添加私有仓库专属参数
           content-type: json
           client-payload: '{"private": true, "branch": "output"}'
 
