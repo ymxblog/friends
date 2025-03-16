@@ -1,0 +1,16 @@
+name: 发送更改请求
+
+on:
+  repository_dispatch:
+    types: [your_event_type]  # Event type 要与上面的匹配
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Run something
+        run: echo "Triggered by account A!"
