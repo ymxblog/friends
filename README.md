@@ -14,3 +14,7 @@
 ## 如何添加
 
 按照 [Issue 模板](https://github.com/ymxblog/friends/issues/new/choose) 内容填写并提交，审核通过3分钟后博客即可看到友链。
+
+## 如何邮箱订阅
+
+按照 [Issue模板](https://github.com/yeminxi/Friend-Circle-Lite/issues/new/choose) 内容填写并提交，审核通过3分钟后博客即可看到友链。
