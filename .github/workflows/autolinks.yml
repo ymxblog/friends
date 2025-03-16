@@ -1,8 +1,6 @@
 # 账号A的仓库配置（.github/workflows/trigger.yml）
 name: Trigger Repo B
 on:
-  issues: 
-  watch: 
   push:
     branches: [output]
 jobs:
