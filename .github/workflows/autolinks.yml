@@ -33,8 +33,9 @@ jobs:
           echo "Changes detected: $DIFF"
           echo "changes=true" >> $GITHUB_ENV
           
-          # 将更改的文件存入环境变量，确保不会出错
-          MODIFIED_FILES=$(echo "$DIFF" | tr '\n' ',')  # 用逗号分隔文件名
+          # 用逗号分隔文件名并存储至环境变量
+          MODIFIED_FILES=$(echo "$DIFF" | tr '\n' ',')
+          MODIFIED_FILES=$(echo "$MODIFIED_FILES" | sed 's/,/,/g')  # 确保每项之间用逗号分隔
           echo "modified_files=$MODIFIED_FILES" >> $GITHUB_ENV
         fi
 
@@ -45,10 +46,17 @@ jobs:
         TRIGGER_TOKEN: ${{ secrets.MY_SECRET_TOKEN }}  # 用于访问目标私密仓库的 PAT
       run: |
         MODIFIED_FILES=${{ env.modified_files }}
+        
+        # 使用 jq 创建 JSON 数据
+        PAYLOAD=$(jq -n \
+          --arg event_type "repo-changed" \
+          --arg changed_files "$MODIFIED_FILES" \
+          '{event_type: $event_type, client_payload: {changed_files: $changed_files}}')
+
         echo "Triggering another repository with modified files: $MODIFIED_FILES"
         
         curl -X POST \
         -H "Authorization: token $TRIGGER_TOKEN" \
         -H "Accept: application/vnd.github.v3+json" \
         https://api.github.com/repos/yeminxi/hexo_code/dispatches \
-        -d "{\"event_type\":\"repo-changed\", \"client_payload\": {\"changed_files\": \"$MODIFIED_FILES\"}}"
+        -d "$PAYLOAD"
