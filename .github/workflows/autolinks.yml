@@ -44,4 +44,4 @@ jobs:
         -H "Authorization: token $TRIGGER_TOKEN" \
         -H "Accept: application/vnd.github.v3+json" \
         https://api.github.com/repos/yeminxi/hexo_code/dispatches \
-        -d '{"event_type":"trigger-action"}'  # 与目标仓库中事件类型一致
+        -d '{"event_type":"repo-changed"}'  # 与目标仓库中事件类型一致
