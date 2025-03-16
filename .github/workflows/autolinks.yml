@@ -1,5 +1,4 @@
-# 账号A的仓库配置（.github/workflows/trigger.yml）
-name: Trigger Repo B
+name: Trigger Private Repo B
 on:
   push:
     branches: [output]
@@ -7,9 +6,13 @@ jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
-      - uses: peter-evans/repository-dispatch@v3
+      - name: Send dispatch event
+        uses: peter-evans/repository-dispatch@v3
         with:
-          token: ${{ secrets.MY_SECRET_TOKEN }}
+          token: ${{ secrets.MY_SECRET_TOKEN }}  # 必须为账号B的PAT
           repository: yeminxi/hexo_code
           event-type: repo-changed
-          client-payload: '{"message":"Triggered by A!"}'  # 可选：传递额外参数
+          # 添加私有仓库专属参数
+          content-type: json
+          client-payload: '{"private": true, "branch": "output"}'
+
