@@ -1,32 +1,42 @@
-name: 自动获取友链更新
+name: 检测 Output 分支文件变化
+
 on:
   push:
     branches:
-      - output
+      - output  # 监听 output 分支推送
 
 jobs:
-  detect:
+  detect_changes:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: 检查分支
+      - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: output
       
-      - name: 检查v2文件夹是否被更改了
-        id: check_changes
+      - name: Check for specific file change
+        id: check_file_change
         run: |
-          # 检查 links 文件夹中的文件是否被更改
-          if [ "$(git diff --name-only HEAD^ HEAD | grep '^v2/')" ]; then
+          if [[ $(git diff --name-only HEAD^ HEAD) == *"v2/active.json"* ]]; then  # 替换为您想检测的文件路径
             echo "changed=true" >> $GITHUB_ENV
           else
             echo "changed=false" >> $GITHUB_ENV
           fi
+
+      - name: Check if the push was from a specific action
+        if: env.changed == 'true'
+        run: |
+          # 检查最近的提交消息，验证是否来自特定 Action
+          last_commit_message=$(git log -1 --pretty=%B)
+          if [[ $last_commit_message == *"[bot]"* ]]; then  # 假设执行 Action 的用户包含 [bot] 进行标识
+            echo "source_valid=true" >> $GITHUB_ENV
+          else
+            echo "source_valid=false" >> $GITHUB_ENV
+          fi
       
       - name: Trigger another repository action
-        if: env.changed == 'true'
+        if: env.changed == 'true' && env.source_valid == 'true'
         uses: peter-evans/repository-dispatch@v3
         with:
-          repository: yeminxi/solitude  # 替换为目标仓库
-          token: ${{ secrets.MY_SECRET_TOKEN }}  # 使用之前设置的 PAT
-          event-type: repo-changed  # 自定义事件类型
+          repository: yeminxi/solitude  # 目标仓库
+          token: ${{ secrets.MY_SECRET_TOKEN }}  # 使用前面设置的 PAT
+          event-type: repo-changed  # 事件类型
