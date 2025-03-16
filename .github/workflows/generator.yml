@@ -28,8 +28,8 @@ jobs:
         push-branch: 'output'
         force-push: 'true'
         commit-message: 'Generate Json'
-        name: github-actions[bot]
-        email: github-actions[bot]@noreply.github.com
+        name: ymxblog
+        email: ymxblog@qq.com
     - name: Trigger another repository action
       uses: peter-evans/repository-dispatch@v3
       with:
