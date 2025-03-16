@@ -15,6 +15,12 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
+      - name: Trigger another repository action
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          repository: yeminxi/solitude  # 目标仓库
+          token: ${{ secrets.MY_SECRET_TOKEN }}  # 使用前面设置的 PAT
+          event-type: repo-changed  # 事件类型
       - uses: actions/checkout@v3
       - name: Label Commenter
         uses: peaceiris/actions-label-commenter@v1
