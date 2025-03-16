@@ -17,4 +17,4 @@
 
 ## 如何邮箱订阅
 
-按照 [Issue模板](https://github.com/yeminxi/Friend-Circle-Lite/issues/new/choose) 内容填写并提交，审核通过3分钟后博客即可看到友链。
+按照 [Issue模板](https://github.com/yeminxi/Friend-Circle-Lite/issues/new/choose) 内容填写并提交，下次博客更新会通过邮箱推送。
