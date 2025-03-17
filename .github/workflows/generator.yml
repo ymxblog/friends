@@ -40,8 +40,7 @@ jobs:
         git add . # 仅添加特定的文件或目录
         git commit -m "友链更新" || echo "No changes to commit"
         git remote add origin https://${{ secrets.GITHUBUSERNAME }}:${{ secrets.PAT }}@github.com/${{ secrets.GITHUBUSERNAME }}/CDN.git
-        git pull origin main --rebase
-        git push -u origin main
+        git push --force -u origin main
     # - name: 发送请求至本仓库的另外一工作流
     #   uses: peter-evans/repository-dispatch@v3
     #   with:
