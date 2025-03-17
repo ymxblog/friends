@@ -39,7 +39,7 @@ jobs:
         git branch -M main
         git add . # 仅添加特定的文件或目录
         git commit -m "友链更新" || echo "No changes to commit"
-        git remote add origin https://github.com/${{ secrets. }}/CDN.git  # 替换为目标仓库 URL
+        git remote add origin https://github.com/${{ secrets.GITHUBUSERNAME }}/CDN.git  # 替换为目标仓库 URL
         git push -u origin main
 
     # - name: Trigger Local Workflow
