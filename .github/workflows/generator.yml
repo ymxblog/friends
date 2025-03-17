@@ -31,7 +31,6 @@ jobs:
         name: ${{ secrets.GITHUBUSERNAME }}
         email: ${{ secrets.GITHUBEMAIL }}
     - name: 推送至CDN仓库
-      # 推送至CDN仓库
       run: |
         cd ./v2
         
@@ -55,15 +54,19 @@ jobs:
         
         git fetch origin
         
-        git clean -fd || echo "No untracked files to clean"
+        # 移除了清理操作
+        # git clean -fd || echo "No untracked files to clean"
         
         git merge origin/main --allow-unrelated-histories || { echo "Merge conflict detected"; exit 1; }
         
         # 显示当前状态
         git status
         
+        # 列出特定目录的文件
+        ls -la ./links/
+        
         # 添加文件并尝试提交
-        git add links/  # 确保添加特定的文件或目录
+        git add links/
         
         if [ -n "$(git status --porcelain)" ]; then
           git commit -m "友链更新" || echo "No changes to commit"
@@ -72,10 +75,6 @@ jobs:
         fi
         
         git push -u origin main || { echo "Push failed, please resolve the issues."; exit 1; }
-
-
-
-
     # - name: 发送请求至本仓库的另外一工作流
     #   uses: peter-evans/repository-dispatch@v3
     #   with:
