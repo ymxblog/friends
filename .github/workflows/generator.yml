@@ -32,12 +32,12 @@ jobs:
         email: ${{ secrets.GITHUBEMAIL }}
     - name: 推送至CDN仓库
       run: |
-        cd ./v2
+        cd ./
         git init
         git config --global user.name "${{ secrets.GITHUBUSERNAME }}"
         git config --global user.email "${{ secrets.GITHUBEMAIL }}"
         git branch -M main
-        git add . # 仅添加特定的文件或目录
+        git add v2 # 仅添加特定的文件或目录
         git commit -m "友链更新" || echo "No changes to commit"
         git remote add origin https://${{ secrets.GITHUBUSERNAME }}:${{ secrets.PAT }}@github.com/${{ secrets.GITHUBUSERNAME }}/CDN.git
         git pull origin main --rebase
