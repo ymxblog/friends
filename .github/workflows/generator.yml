@@ -9,19 +9,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
+    - name: 克隆至Github Action 路径
       uses: actions/checkout@v4
-    - name: Set up Python
+    - name: 使用指定python版本
       uses: actions/setup-python@v5
       with:
         python-version: 3.x
-    - name: Install requirements #安装requests
+    - name: 安装依赖 #安装requests
       run: |
         pip install -r requirements.txt
-    - name: Update links #更新
+    - name: 更新友链 #更新
       run: |
         python generator/main.py
-    - name: Commit & Push
+    - name: 推送本仓库分支output
       uses: action-x/commit@v2.9
       with:
         github-token: ${{ secrets.PAT }}
@@ -42,7 +42,7 @@ jobs:
         git remote add origin https://${{ secrets.GITHUBUSERNAME }}:${{ secrets.PAT }}@github.com/${{ secrets.GITHUBUSERNAME }}/CDN.git
         git push -u origin main
 
-    # - name: Trigger Local Workflow
+    # - name: 发送请求至本仓库的另外一工作流
     #   uses: peter-evans/repository-dispatch@v3
     #   with:
     #     token: ${{ secrets.GITHUB_TOKEN }}  # 使用默认的 GITHUB_TOKEN
