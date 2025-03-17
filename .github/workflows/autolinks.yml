@@ -1,4 +1,4 @@
-name: Trigger Private Repo B
+name: 更新网站友链
 on:
   repository_dispatch:
     types: [linkschange]  # 本工作流由 change 事件触发
@@ -18,7 +18,7 @@ jobs:
         run: echo "成功触发，当前分支：${{ github.event.client_payload.branch }}"
 
       # 步骤3：触发账号B的私有仓库工作流（关键修改部分）
-      - name: Trigger Account B's Workflow
+      - name: 触发更新
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.MY_SECRET_TOKEN }}  # 必须使用账号B的PAT
