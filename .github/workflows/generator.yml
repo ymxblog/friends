@@ -33,8 +33,18 @@ jobs:
     - name: 修复权限
       run: chmod -R u+w .git || echo "无法修改权限，继续执行"
     
+    - name: 打印当前用户
+      run: whoami
+    
+    - name: 列出 .git 目录内容及权限
+      run: ls -la .git || echo "没有找到.git目录"
+    
+    - name: 检查文件权限
+      run: find .git -exec ls -la {} +
+    
     - name: 删除旧的 Git 目录
-      run: rm -rf .git
+      run: rm -rf .git || echo "无法删除旧的Git目录，可能存在权限问题"
+
     
     - name: 推送至 CDN 仓库
       run: |
