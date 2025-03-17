@@ -42,10 +42,10 @@ jobs:
         git remote add origin https://${{ secrets.GITHUBUSERNAME }}:${{ secrets.PAT }}@github.com/${{ secrets.GITHUBUSERNAME }}/CDN.git
         git pull origin main --rebase
         git push -u origin main
-    # - name: 发送请求至本仓库的另外一工作流
-    #   uses: peter-evans/repository-dispatch@v3
-    #   with:
-    #     token: ${{ secrets.GITHUB_TOKEN }}  # 使用默认的 GITHUB_TOKEN
-    #     repository: ${{ github.repository }}  # 指向当前仓库
-    #     event-type: linkschange
-    #     client-payload: '{"branch": "output"}'
+    - name: 发送请求至本仓库的另外一工作流
+      uses: peter-evans/repository-dispatch@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}  # 使用默认的 GITHUB_TOKEN
+        repository: ${{ github.repository }}  # 指向当前仓库
+        event-type: linkschange
+        client-payload: '{"branch": "output"}'
