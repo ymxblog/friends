@@ -1,4 +1,4 @@
-name: Generator
+name: 获取新的友链
 
 on:
   issues:
