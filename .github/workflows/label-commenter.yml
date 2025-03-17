@@ -1,5 +1,4 @@
-name: Label Commenter
-
+name: 状态结果评论
 on:
   issues:
     types: [labeled, unlabeled]
