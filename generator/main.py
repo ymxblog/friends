@@ -7,7 +7,7 @@ import json
 import config
 
 version = 'v2'
-outputdir = version  # 输出文件结构变化时，更新输出路径版本
+outputdir = os.path.join(version, 'links')  # 输出文件结构变化时，更新输出路径版本
 filenames = []
 json_pool = []
 
