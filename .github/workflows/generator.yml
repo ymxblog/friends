@@ -28,8 +28,8 @@ jobs:
         push-branch: 'output'
         force-push: 'true'
         commit-message: 'Generate Json'
-        name: ymxblog
-        email: ymxblog@qq.com
+        name: ${{ secrets.GITHUBUSERNAME }}
+        email: ${{ secrets.GITHUBEMAIL }}
     - name: 推送至CDN仓库
       run: |
         cd ./v2
