@@ -1,4 +1,4 @@
-name: 获取新的友链
+name: Generator
 
 on:
   issues:
@@ -9,19 +9,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: 克隆至Github Action 路径
+    - name: Checkout
       uses: actions/checkout@v4
-    - name: 使用指定python版本
+    - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: 3.x
-    - name: 安装依赖 #安装requests
+    - name: Install requirements #安装requests
       run: |
         pip install -r requirements.txt
-    - name: 更新友链 #更新
+    - name: Update links #更新
       run: |
         python generator/main.py
-    - name: 推送本仓库分支output
+    - name: Commit & Push
       uses: action-x/commit@v2.9
       with:
         github-token: ${{ secrets.PAT }}
