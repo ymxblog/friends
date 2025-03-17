@@ -40,6 +40,7 @@ jobs:
         # 初始化 Git 仓库（如果之前未初始化）
         if [ ! -d ".git" ]; then
           git init
+          echo "Initialized new Git repository."
         fi
         
         # 配置用户信息
@@ -54,8 +55,11 @@ jobs:
         # 添加远程仓库
         git remote add origin https://${{ secrets.GITHUBUSERNAME }}:${{ secrets.PAT }}@github.com/${{ secrets.GITHUBUSERNAME }}/CDN.git
         
-        # 清理未跟踪文件
-        git clean -fd || echo "No untracked files to clean"
+        # 检查工作树中是否有文件
+        if [ -z "$(ls -A .)" ]; then
+          echo "No files to commit."
+          exit 0
+        fi
         
         # 拉取远程最新更改
         git fetch origin
@@ -63,10 +67,15 @@ jobs:
         
         # 添加文件并尝试提交
         git add .  # 如果只想添加特定文件，可以在此修改
-        git commit -m "友链更新" || echo "No changes to commit"
+        if [ -n "$(git status --porcelain)" ]; then
+          git commit -m "友链更新" || echo "No changes to commit"
+        else
+          echo "No changes to commit."
+        fi
       
         # 推送到远程
         git push -u origin main || { echo "Push failed, please resolve the issues."; exit 1; }
+
 
     # - name: 发送请求至本仓库的另外一工作流
     #   uses: peter-evans/repository-dispatch@v3
