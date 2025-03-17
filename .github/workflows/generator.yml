@@ -30,20 +30,14 @@ jobs:
         commit-message: 'Generate Json'
         name: ${{ secrets.GITHUBUSERNAME }}
         email: ${{ secrets.GITHUBEMAIL }}
-    - name: 修复权限
-      run: chmod -R u+w .git || echo "无法修改权限，继续执行"
-    
-    - name: 打印当前用户
-      run: whoami
-    
-    - name: 列出 .git 目录内容及权限
-      run: ls -la .git || echo "没有找到.git目录"
-    
-    - name: 检查文件权限
-      run: find .git -exec ls -la {} +
-    
-    - name: 删除旧的 Git 目录
-      run: rm -rf .git || echo "无法删除旧的Git目录，可能存在权限问题"
+    - name: 验证 v2 目录是否存在
+      run: |
+        if [ ! -d "v2" ]; then
+          echo "目录 'v2' 不存在"
+        else
+          echo "目录 'v2' 存在，继续进行设置"
+          ls -l v2 # 列出 v2 目录下的文件
+        fi
 
     
     - name: 推送至 CDN 仓库
