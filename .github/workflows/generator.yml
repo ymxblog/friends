@@ -40,7 +40,9 @@ jobs:
 
           # 如果需要删除完整的 links 目录，请使用 -r 参数
           git rm -r links/  # 删除整个 links 目录（如有必要）
-          
+          # 配置用户信息
+          git config --global user.name "${{ secrets.GITHUBUSERNAME }}"
+          git config --global user.email "${{ secrets.GITHUBEMAIL }}"
           git commit -m "Delete links directory"
           git push origin main
 
