@@ -7,7 +7,7 @@ labels:
         body: |
           **🎉 恭喜，友链添加成功！**
 
-          稍后片刻刷新网页就可以看到您的链接。[![部署实时状态](https://github.com/yeminxi/hexo_code/actions/workflows/autobushu.yml/badge.svg?event=repository_dispatch)](https://github.com/yeminxi/hexo_code/actions/workflows/autobushu.yml)
+          稍后片刻刷新网页就可以看到您的链接。
 
           > 如果您的站点信息发生了变动，请直接修改这个 issue 的内容。
   
