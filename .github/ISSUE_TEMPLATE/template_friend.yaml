@@ -24,7 +24,7 @@ body:
               友链地址：https://blog.418121.xyz/links/
               订阅地址：https://blog.418121.xyz/feed.xml
          ```
-         ![友链填写示例](./1.webp)
+         ![友链填写示例](https://raw.githubusercontent.com/ymxblog/friends/refs/heads/main/.github/ISSUE_TEMPLATE/1.webp)
   - type: checkboxes
     id: checks
     attributes:
