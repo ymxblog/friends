@@ -30,21 +30,21 @@ jobs:
     #     commit-message: 'Generate Json'
     #     name: ${{ secrets.GITHUBUSERNAME }}
     #     email: ${{ secrets.GITHUBEMAIL }}
-    - name: Checkout CDN repository
-      run: |
-          git clone https://${{ secrets.GITHUBUSERNAME }}:${{ secrets.PAT }}@github.com/${{ secrets.GITHUBUSERNAME }}/CDN.git
-          cd CDN
+    # - name: Checkout CDN repository
+    #   run: |
+    #       git clone https://${{ secrets.GITHUBUSERNAME }}:${{ secrets.PAT }}@github.com/${{ secrets.GITHUBUSERNAME }}/CDN.git
+    #       cd CDN
           
-          # 确保没有未加入分支的内容
-          git fetch origin
+    #       # 确保没有未加入分支的内容
+    #       git fetch origin
 
-          # 如果需要删除完整的 links 目录，请使用 -r 参数
-          git rm -r links/  # 删除整个 links 目录（如有必要）
-          # 配置用户信息
-          git config --global user.name "${{ secrets.GITHUBUSERNAME }}"
-          git config --global user.email "${{ secrets.GITHUBEMAIL }}"
-          git commit -m "Delete links directory"
-          git push origin main
+    #       # 如果需要删除完整的 links 目录，请使用 -r 参数
+    #       git rm -r links/  # 删除整个 links 目录（如有必要）
+    #       # 配置用户信息
+    #       git config --global user.name "${{ secrets.GITHUBUSERNAME }}"
+    #       git config --global user.email "${{ secrets.GITHUBEMAIL }}"
+    #       git commit -m "Delete links directory"
+    #       git push origin main
     - name: 延迟30s执行
       run: |
           echo "Starting delay..."
