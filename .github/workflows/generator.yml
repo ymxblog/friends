@@ -1,9 +1,9 @@
 name: Generator
 
 on:
-  issues:
-  watch:
-    types: [started]
+  # issues:
+  # watch:
+  #   types: [started]
 
 jobs:
   build:
