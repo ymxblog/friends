@@ -15,15 +15,15 @@ body:
               link: https://blog.418121.xyz/
               avatar: https://blog.418121.xyz/images/avatar.webp 
               descr: 意义是自己赐予的
-              linkpage: https://blog.418121.xyz/links/
               rss: https://blog.418121.xyz/feed.xml
+              linkpage: https://blog.418121.xyz/links/
               
               博客名称：叶泯希
               博客地址：https://blog.418121.xyz/
               博客头像：https://blog.418121.xyz/images/avatar.webp
               博客描述：意义是自己赐予的
-              友链地址：https://blog.418121.xyz/links/
               订阅地址：https://blog.418121.xyz/feed.xml
+              友链地址：https://blog.418121.xyz/links/
          ```
          ![友链填写示例](https://raw.githubusercontent.com/ymxblog/friends/refs/heads/main/.github/ISSUE_TEMPLATE/1.webp)
   - type: checkboxes
@@ -61,8 +61,8 @@ body:
             "topimg": "",
             "tag": "",
             "color": "",
-            "linkpage": "",
-            "rss": ""
+            "rss": "",
+            "linkpage": ""
         }
         ```
   - type: input
