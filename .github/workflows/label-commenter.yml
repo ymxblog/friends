@@ -1,9 +1,9 @@
 name: 状态结果评论
 on:
-  # issues:
-  #   types: [labeled, unlabeled]
-  # pull_request_target:
-  #   types: [labeled, unlabeled]
+  issues:
+    types: [labeled, unlabeled]
+  pull_request_target:
+    types: [labeled, unlabeled]
 
 permissions:
   contents: read
