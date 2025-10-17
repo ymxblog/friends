@@ -15,6 +15,7 @@ body:
               link: https://blog.418121.xyz/
               avatar: https://blog.418121.xyz/images/avatar.webp 
               descr: 意义是自己赐予的
+              linkpage: https://blog.418121.xyz/links/
               rss: https://blog.418121.xyz/feed.xml
               
               博客名称：叶泯希
@@ -49,7 +50,7 @@ body:
       required: true
     attributes:
       label: 友链信息
-      description: 前四需要项必填，第五项选填，最后两项由作者填写，请在双引号中填写，不要修改格式。
+      description: 前四需要项必填，第五项选填，第六、七项由作者填写，最后两项请填入友链地址和订阅地址请在双引号中填写，不要修改格式。
       value: |
         ```json
         {
@@ -59,23 +60,11 @@ body:
             "descr": "",
             "topimg": "",
             "tag": "",
-            "color": ""
+            "color": "",
+            "linkpage": "",
+            "rss": ""
         }
         ```
-  - type: input
-    id: friends-html
-    attributes:
-      label: 友链地址
-      description: 请输入您的友链页面地址。
-      placeholder: "如: https://blog.418121.xyz/links/"
-    validations:
-      required: true
-  - type: input
-    id: friends-rss
-    attributes:
-      label: 订阅地址（可选）
-      description: 请输入您的订阅地址。
-      placeholder: "如: https://blog.418121.xyz/feed.xml"
   - type: input
     id: friends-repo
     attributes:
